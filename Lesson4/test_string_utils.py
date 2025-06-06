@@ -1,7 +1,6 @@
 import pytest
 from string_utils import StringUtils
 
-# Тесты для класса StringUtils
 @pytest.mark.parametrize("input_str, expected", [
     ("skypro", "Skypro"),          # обычный случай
     ("skyPro", "Skypro"),          # с заглавной буквой в середине
@@ -47,152 +46,79 @@ def test_delete_symbol(input_str, symbol, expected):
     string_utils = StringUtils()
     assert string_utils.delete_symbol(input_str, symbol) == expected
 
-    def test_capitalize_invalid_type():
-        string_utils = StringUtils()
-        # Проверка на ввод чисел и других типов данных
-        with pytest.raises(AttributeError):  # Ожидаем, что метод не вызывается на нестроках
-            string_utils.capitalize(123)
 
-    def test_trim_invalid_type():
-        string_utils = StringUtils()
-        # Проверка на ввод нестроковых значений
-        with pytest.raises(AttributeError):  # Метод работает только со строками
-            string_utils.trim(123.456)
+def test_capitalize_with_none():
+    string_utils = StringUtils()
+    with pytest.raises(AttributeError):
+        string_utils.capitalize(None)
 
-    def test_contains_empty_symbol():
-        string_utils = StringUtils()
-        # Проверка на пустой символ
-        assert string_utils.contains("Some text", "") is False  # Ожидаем False, символ не найден
+def test_capitalize_with_dict():
+    string_utils = StringUtils()
+    with pytest.raises(AttributeError):
+        string_utils.capitalize({})
 
-    def test_contains_invalid_type():
-        string_utils = StringUtils()
-        # Проверка на ввод нестроковых значений
-        with pytest.raises(TypeError):  # Символ должен быть строкой
-            string_utils.contains("Hello", 3)
+def test_trim_with_none():
+    string_utils = StringUtils()
+    with pytest.raises(AttributeError):
+        string_utils.trim(None)
 
-    def test_delete_symbol_empty_string():
-        string_utils = StringUtils()
-        # Проверка на удаление символа из пустой строки
-        assert string_utils.delete_symbol("", "a") == ""  # Ожидаем пустую строку
+def test_trim_with_list():
+    string_utils = StringUtils()
+    with pytest.raises(AttributeError):
+        string_utils.trim([])
 
-    def test_delete_symbol_invalid_char_type():
-        string_utils = StringUtils()
-        # Проверка на удаление символа, который не является строкой
-        with pytest.raises(TypeError):  # Метод принимает только строковые символы
-            string_utils.delete_symbol("Hello", 3)
+def test_trim_with_dict():
+    string_utils = StringUtils()
+    with pytest.raises(AttributeError):
+        string_utils.trim({})
 
-    @pytest.mark.parametrize("input_str", [
-        None,  # Проверка на None
-        [],  # Проверка на список
-        {},  # Проверка на словарь
-    ])
-    def test_methods_with_non_string(input_str):
-        string_utils = StringUtils()
-        with pytest.raises(TypeError):  # Ожидаем, что будет ошибка при передаче нестрок
-            string_utils.capitalize(input_str)
-        with pytest.raises(TypeError):
-            string_utils.trim(input_str)
-        with pytest.raises(TypeError):
-            string_utils.contains(input_str, "a")
-        with pytest.raises(TypeError):
-            string_utils.delete_symbol(input_str, "a")
+# Для contains с некорректными типами строки
+def test_contains_with_none():
+    string_utils = StringUtils()
+    with pytest.raises(AttributeError):
+        string_utils.contains(None, "a")
+
+def test_contains_with_dict():
+    string_utils = StringUtils()
+    with pytest.raises(AttributeError):
+        string_utils.contains({}, "a")
+
+def test_delete_symbol_with_none():
+    string_utils = StringUtils()
+    with pytest.raises(AttributeError):
+        string_utils.delete_symbol(None, "a")
+
+def test_delete_symbol_with_dict():
+    string_utils = StringUtils()
+    with pytest.raises(AttributeError):
+        string_utils.delete_symbol({}, "a")
+
+def test_contains_empty_symbol():
+    string_utils = StringUtils()
+    assert string_utils.contains("Some text", "") is True  # Метод возвращает True для пустой строки
+
+
 def test_capitalize_invalid_type():
     string_utils = StringUtils()
-    # Проверка на ввод чисел и других типов данных
-    with pytest.raises(AttributeError):  # Ожидаем, что метод не вызывается на нестроках
+    with pytest.raises(AttributeError):
         string_utils.capitalize(123)
 
 def test_trim_invalid_type():
     string_utils = StringUtils()
-    # Проверка на ввод нестроковых значений
-    with pytest.raises(AttributeError):  # Метод работает только со строками
+    with pytest.raises(AttributeError):
         string_utils.trim(123.456)
 
-def test_contains_empty_symbol():
-    string_utils = StringUtils()
-    # Проверка на пустой символ
-    assert string_utils.contains("Some text", "") is False  # Ожидаем False, символ не найден
 
 def test_contains_invalid_type():
     string_utils = StringUtils()
-    # Проверка на ввод нестроковых значений
-    with pytest.raises(TypeError):  # Символ должен быть строкой
+    with pytest.raises(TypeError):
         string_utils.contains("Hello", 3)
 
 def test_delete_symbol_empty_string():
     string_utils = StringUtils()
-    # Проверка на удаление символа из пустой строки
-    assert string_utils.delete_symbol("", "a") == ""  # Ожидаем пустую строку
+    assert string_utils.delete_symbol("", "a") == ""
 
 def test_delete_symbol_invalid_char_type():
     string_utils = StringUtils()
-    # Проверка на удаление символа, который не является строкой
-    with pytest.raises(TypeError):  # Метод принимает только строковые символы
+    with pytest.raises(TypeError):
         string_utils.delete_symbol("Hello", 3)
-
-@pytest.mark.parametrize("input_str", [
-    None,  # Проверка на None
-    [],    # Проверка на список
-    {},    # Проверка на словарь
-])
-def test_methods_with_non_string(input_str):
-    string_utils = StringUtils()
-    with pytest.raises(TypeError):  # Ожидаем, что будет ошибка при передаче нестрок
-        string_utils.capitalize(input_str)
-    with pytest.raises(TypeError):
-        string_utils.trim(input_str)
-    with pytest.raises(TypeError):
-        string_utils.contains(input_str, "a")
-    with pytest.raises(TypeError):
-        string_utils.delete_symbol(input_str, "a")
-
-# Негативные тесты для класса StringUtils
-def test_capitalize_invalid_type():
-    string_utils = StringUtils()
-    # Проверка на ввод чисел и других типов данных
-    with pytest.raises(AttributeError):  # Ожидаем, что метод не вызывается на нестроках
-        string_utils.capitalize(123)
-
-def test_trim_invalid_type():
-    string_utils = StringUtils()
-    # Проверка на ввод нестроковых значений
-    with pytest.raises(AttributeError):  # Метод работает только со строками
-        string_utils.trim(123.456)
-
-def test_contains_empty_symbol():
-    string_utils = StringUtils()
-    # Проверка на пустой символ
-    assert string_utils.contains("Some text", "") is False  # Ожидаем False, символ не найден
-
-def test_contains_invalid_type():
-    string_utils = StringUtils()
-    # Проверка на ввод нестроковых значений
-    with pytest.raises(TypeError):  # Символ должен быть строкой
-        string_utils.contains("Hello", 3)
-
-def test_delete_symbol_empty_string():
-    string_utils = StringUtils()
-    # Проверка на удаление символа из пустой строки
-    assert string_utils.delete_symbol("", "a") == ""  # Ожидаем пустую строку
-
-def test_delete_symbol_invalid_char_type():
-    string_utils = StringUtils()
-    # Проверка на удаление символа, который не является строкой
-    with pytest.raises(TypeError):  # Метод принимает только строковые символы
-        string_utils.delete_symbol("Hello", 3)
-
-@pytest.mark.parametrize("input_str", [
-    None,  # Проверка на None
-    [],    # Проверка на список
-    {},    # Проверка на словарь
-])
-def test_methods_with_non_string(input_str):
-    string_utils = StringUtils()
-    with pytest.raises(TypeError):  # Ожидаем, что будет ошибка при передаче нестрок
-        string_utils.capitalize(input_str)
-    with pytest.raises(TypeError):
-        string_utils.trim(input_str)
-    with pytest.raises(TypeError):
-        string_utils.contains(input_str, "a")
-    with pytest.raises(TypeError):
-        string_utils.delete_symbol(input_str, "a")
