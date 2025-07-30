@@ -25,4 +25,4 @@ def create_db_tables():
 
 if __name__ == "__main__":
     create_db_tables()
-    print("Таблицы созданы")
+    print("Таблицы созданы")  
