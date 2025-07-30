@@ -17,19 +17,19 @@ def db():
 
 
 def test_add_student(db: Session):
-    new_student = Student(name="Ruslan", age=44)
+    new_student = Student(name="Anastasiya", age=25)
     db.add(new_student)
     db.commit()
     db.refresh(new_student)
 
     assert new_student.id is not None
-    assert new_student.name == "Ruslan"
-    assert new_student.age == 44
+    assert new_student.name == "Anastasiya"
+    assert new_student.age == 25
 
     retrieved_student = db.query(Student).filter(
-        Student.name == "Ruslan").first()
+        Student.name == "Anastasiya").first()
     assert retrieved_student is not None
-    assert retrieved_student.name == "Ruslan"
+    assert retrieved_student.name == "Anastasiya"
     print(new_student)
 
 
@@ -65,4 +65,4 @@ def test_delete_student(db: Session):
                        .filter(Student.id == student_id)
                        .first())
     assert deleted_student is None
-    print(student_to_delete)
+    print(student_to_delete)   
